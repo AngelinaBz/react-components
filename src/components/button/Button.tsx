@@ -104,10 +104,6 @@ class Button extends Component<ButtonProps, ButtonState> {
             width: loaderSize,
             height: loaderSize,
             visibility: isLoading ? 'visible' : 'hidden',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
           }}
         >
           <img src="./tube-spinner.svg" alt="Loading" />
@@ -118,8 +114,6 @@ class Button extends Component<ButtonProps, ButtonState> {
             gap: `${gap}px`,
             visibility: isLoading ? 'hidden' : 'visible',
             transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-            transition:
-              'transform 500ms cubic-bezier(0, -0.3, 0.5, 1.3), opacity 500ms',
           }}
         >
           <span className="label">{label}</span>
@@ -133,7 +127,13 @@ class Button extends Component<ButtonProps, ButtonState> {
             />
           )}
         </div>
-        {(isHovered || isPressed) && <div className="overlay"></div>}
+        <div
+          className="overlay"
+          style={{
+            opacity: isHovered ? '0.12' : isPressed ? '0.20' : '0',
+            transition: 'opacity 500ms cubic-bezier(0, -0.3, 0.5, 1.3)',
+          }}
+        ></div>
       </button>
     );
   }
