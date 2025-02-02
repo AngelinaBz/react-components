@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button.primary {
+  background-color: #ff7700;
+  color: white;
+}
+
+.button.secondary {
+  background-color: #8366561f;
+  color: white;
+}
+
+.button.enabled {
+  opacity: 1;
+}
+
+.contentGroup {
+  display: flex;
+  align-items: center;
+}
