@@ -6,7 +6,7 @@ function App() {
     <>
       <Button
         label={'Что сделать'}
-        style="secondary"
+        style="primary"
         size={36}
         state={'enabled'}
         counter={true}

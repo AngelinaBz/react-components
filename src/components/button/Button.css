@@ -2,9 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 16px;
   cursor: pointer;
   font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  transition: transform 250ms;
 }
 
 .button.primary {
@@ -13,7 +16,7 @@
 }
 
 .button.secondary {
-  background-color: #8366561f;
+  background-color: rgba(131, 102, 86, 0.121);
   color: white;
 }
 
@@ -21,7 +24,25 @@
   opacity: 1;
 }
 
+.button.hovered .overlay,
+.button.pressed .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  opacity: 0.12;
+  transition: opacity 400ms;
+}
+
 .contentGroup {
   display: flex;
+  align-items: center;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
   align-items: center;
 }

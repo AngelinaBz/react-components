@@ -11,9 +11,54 @@ type ButtonProps = {
   focused: boolean;
 };
 
-class Button extends Component<ButtonProps> {
+type ButtonState = {
+  isHovered: boolean;
+  isPressed: boolean;
+  isLoading: boolean;
+};
+
+class Button extends Component<ButtonProps, ButtonState> {
+  constructor(props: ButtonProps) {
+    super(props);
+    this.state = {
+      isHovered: false,
+      isPressed: false,
+      isLoading: false,
+    };
+  }
+  handleMouseEnter = () => {
+    if (!this.state.isPressed && !this.state.isLoading) {
+      this.setState({ isHovered: true });
+    }
+  };
+
+  handleMouseLeave = () => {
+    if (!this.state.isPressed && !this.state.isLoading) {
+      this.setState({ isHovered: false });
+    }
+  };
+
+  handleMouseDown = () => {
+    this.setState({ isHovered: false, isPressed: true });
+  };
+
+  handleMouseUp = () => {
+    this.setState({ isPressed: false }, this.startLoading);
+  };
+
+  startLoading = () => {
+    if (!this.state.isLoading) {
+      this.setState({ isLoading: true });
+      setTimeout(() => this.stopLoading(), 2000);
+    }
+  };
+
+  stopLoading = () => {
+    this.setState({ isLoading: false });
+  };
   render() {
-    const { label, style, size, state, counter, focused } = this.props;
+    const { label, style, size, counter } = this.props;
+    const { isHovered, isPressed, isLoading } = this.state;
 
     let paddingHorizontal, paddingVertical, loaderSize, gap;
 
@@ -39,43 +84,56 @@ class Button extends Component<ButtonProps> {
       default:
     }
 
-    const buttonClasses = `button ${style} ${state} ${focused ? 'focused' : ''}`;
+    const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''}`;
 
     return (
       <button
         className={buttonClasses}
         style={{
           padding: `${paddingVertical}px ${paddingHorizontal}px`,
+          transform: isPressed ? 'scale(0.95)' : 'scale(1)',
         }}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
       >
+        <div
+          className="loader"
+          style={{
+            width: loaderSize,
+            height: loaderSize,
+            visibility: isLoading ? 'visible' : 'hidden',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <img src="./tube-spinner.svg" alt="Loading" />
+        </div>
         <div
           className="contentGroup"
           style={{
             gap: `${gap}px`,
+            visibility: isLoading ? 'hidden' : 'visible',
+            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+            transition:
+              'transform 500ms cubic-bezier(0, -0.3, 0.5, 1.3), opacity 500ms',
           }}
         >
-          {state === 'loading' ? (
-            <div
-              className="loader"
-              style={{ width: loaderSize, height: loaderSize }}
-            >
-              {/**/}
-            </div>
-          ) : (
-            <>
-              <span className="label">{label}</span>
-              {counter && (
-                <Counter
-                  style={style}
-                  size={8}
-                  quantity={10}
-                  pulse={true}
-                  stroke={true}
-                />
-              )}
-            </>
+          <span className="label">{label}</span>
+          {counter && (
+            <Counter
+              style={style}
+              size={8}
+              quantity={10}
+              pulse={true}
+              stroke={true}
+            />
           )}
         </div>
+        {(isHovered || isPressed) && <div className="overlay"></div>}
       </button>
     );
   }
