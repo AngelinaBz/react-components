@@ -9,8 +9,6 @@ function App() {
         style="primary"
         size={36}
         state={'enabled'}
-        counter={true}
-        focused={false}
       />
     </>
   );

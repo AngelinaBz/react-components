@@ -49,7 +49,7 @@ class Counter extends Component<CounterProps> {
         style={{
           padding: `0 ${paddingHorizontal}px`,
           borderWidth: strokeWidth,
-          height: minHeight,
+          minHeight: minHeight,
           minWidth: minHeight,
         }}
       >

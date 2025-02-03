@@ -8,8 +8,6 @@ type ButtonProps = {
   style: 'primary' | 'secondary';
   size: 28 | 36 | 56;
   state: 'enabled' | 'disabled';
-  counter: boolean;
-  focused: boolean;
 };
 
 type ButtonState = {
@@ -66,7 +64,7 @@ class Button extends Component<ButtonProps, ButtonState> {
     this.setState({ isLoading: false });
   };
   render() {
-    const { label, style, size, counter } = this.props;
+    const { label, style, state, size } = this.props;
     const { isHovered, isPressed, isLoading, counterValue } = this.state;
 
     let paddingHorizontal, paddingVertical, loaderSize, gap;
@@ -93,9 +91,7 @@ class Button extends Component<ButtonProps, ButtonState> {
       default:
     }
 
-    const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''} ${this.props.state === 'disabled' ? 'disabled' : ''}`;
-    const overlayBackground = styles[style].color;
-    const shimmerBackground = styles[style].shimmer;
+    const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''} ${state === 'disabled' ? 'disabled' : ''}`;
     return (
       <button
         className={buttonClasses}
@@ -120,7 +116,7 @@ class Button extends Component<ButtonProps, ButtonState> {
             visibility: isLoading ? 'visible' : 'hidden',
           }}
         >
-          <img src="./tube-spinner.svg" alt="Loading" />
+          <img src={styles[style].spinnerURL} alt="Loading" />
         </div>
         <div
           className="contentGroup"
@@ -135,7 +131,7 @@ class Button extends Component<ButtonProps, ButtonState> {
           }}
         >
           <span className="label">{label}</span>
-          {counter && counterValue > 0 && (
+          {counterValue > 0 && (
             <Counter
               style={style}
               size={16}
@@ -148,7 +144,7 @@ class Button extends Component<ButtonProps, ButtonState> {
         <div
           className="overlay"
           style={{
-            backgroundColor: overlayBackground,
+            backgroundColor: styles[style].color,
             opacity: isHovered ? '0.12' : isPressed ? '0.20' : '0',
             transition: 'opacity 500ms cubic-bezier(0, -0.3, 0.5, 1.3)',
           }}
@@ -156,7 +152,7 @@ class Button extends Component<ButtonProps, ButtonState> {
         {isLoading && (
           <div
             className="shimmer"
-            style={{ background: shimmerBackground }}
+            style={{ background: styles[style].shimmer }}
           ></div>
         )}
       </button>
