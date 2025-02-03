@@ -16,6 +16,11 @@
   color: var(--primary-text-color);
 }
 
+.disabled {
+  opacity: 0.36;
+  pointer-events: none;
+}
+
 .button.secondary {
   background-color: var(--secondary-background-color);
   color: var(--secondary-text-color);

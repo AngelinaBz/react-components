@@ -7,7 +7,7 @@ type ButtonProps = {
   label: string;
   style: 'primary' | 'secondary';
   size: 28 | 36 | 56;
-  state?: 'enabled' | 'disabled';
+  state: 'enabled' | 'disabled';
   counter: boolean;
   focused: boolean;
 };
@@ -93,7 +93,7 @@ class Button extends Component<ButtonProps, ButtonState> {
       default:
     }
 
-    const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''}`;
+    const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''} ${this.props.state === 'disabled' ? 'disabled' : ''}`;
     const overlayBackground = styles[style].color;
     const shimmerBackground = styles[style].shimmer;
     return (
