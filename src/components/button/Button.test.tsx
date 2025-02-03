@@ -4,9 +4,9 @@ import Button from './Button';
 describe('Button Component', () => {
   const defaultProps = {
     label: 'My Button',
-    style: 'primary' as const, // использование as const для конкретного типа
+    style: 'primary' as const,
     size: 36 as const,
-    state: 'enabled' as const, // также использование as const
+    state: 'enabled' as const,
   };
 
   it('renders the button with the correct label and style', () => {
