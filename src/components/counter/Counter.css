@@ -1,0 +1,19 @@
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.counter.primary {
+  background-color: #ffffff1f;
+  color: white;
+}
+
+.counter.secondary {
+  background-color: rgba(131, 102, 86, 0.121);
+  color: #2e2f33;
+}

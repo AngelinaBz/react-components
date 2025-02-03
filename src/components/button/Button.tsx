@@ -15,6 +15,7 @@ type ButtonState = {
   isHovered: boolean;
   isPressed: boolean;
   isLoading: boolean;
+  counterValue: number;
 };
 
 class Button extends Component<ButtonProps, ButtonState> {
@@ -24,6 +25,7 @@ class Button extends Component<ButtonProps, ButtonState> {
       isHovered: false,
       isPressed: false,
       isLoading: false,
+      counterValue: 0,
     };
   }
   handleMouseEnter = () => {
@@ -48,9 +50,15 @@ class Button extends Component<ButtonProps, ButtonState> {
 
   startLoading = () => {
     if (!this.state.isLoading) {
-      this.setState({ isLoading: true });
-      setTimeout(() => this.stopLoading(), 6000);
+      this.setState({ isLoading: true }, this.incrementCounter);
+      setTimeout(() => this.stopLoading(), 1000);
     }
+  };
+
+  incrementCounter = () => {
+    this.setState((prevState) => ({
+      counterValue: prevState.counterValue + 1,
+    }));
   };
 
   stopLoading = () => {
@@ -58,7 +66,7 @@ class Button extends Component<ButtonProps, ButtonState> {
   };
   render() {
     const { label, style, size, counter } = this.props;
-    const { isHovered, isPressed, isLoading } = this.state;
+    const { isHovered, isPressed, isLoading, counterValue } = this.state;
 
     let paddingHorizontal, paddingVertical, loaderSize, gap;
 
@@ -89,7 +97,7 @@ class Button extends Component<ButtonProps, ButtonState> {
       style === 'primary'
         ? 'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)'
         : style === 'secondary'
-          ? 'linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%)'
+          ? 'linear-gradient(to right, rgba(46, 47, 51, 0) 0%, rgba(46, 47, 51, 1) 50%, rgba(46, 47, 51, 0) 100%)'
           : 'none';
     return (
       <button
@@ -133,9 +141,8 @@ class Button extends Component<ButtonProps, ButtonState> {
           {counter && (
             <Counter
               style={style}
-              size={8}
-              quantity={10}
-              pulse={true}
+              size={20}
+              quantity={counterValue > 99 ? '99+' : counterValue}
               stroke={true}
             />
           )}
