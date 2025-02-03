@@ -4,18 +4,17 @@
   justify-content: center;
   position: relative;
   border-radius: 50%;
-  background-color: white;
   box-sizing: border-box;
 }
 
 .counter.primary {
-  background-color: #ffffff1f;
-  color: white;
+  background-color: var(--counter-primary-background-color);
+  color: var(--primary-text-color);
 }
 
 .counter.secondary {
-  background-color: rgba(131, 102, 86, 0.121);
-  color: #2e2f33;
+  background-color: var(--secondary-background-color);
+  color: var(--secondary-text-color);
 }
 
 .live-indicator {
@@ -33,7 +32,7 @@
   height: 100%;
   width: 100%;
   border-radius: 999px;
-  background-color: #ffffff1f;
+  background-color: var(--counter-primary-background-color);
   opacity: 0.2;
 }
 
