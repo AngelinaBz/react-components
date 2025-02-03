@@ -50,7 +50,7 @@ class Button extends Component<ButtonProps, ButtonState> {
   startLoading = () => {
     if (!this.state.isLoading) {
       this.setState({ isLoading: true }, this.incrementCounter);
-      setTimeout(() => this.stopLoading(), 1000);
+      setTimeout(() => this.stopLoading(), 2000);
     }
   };
 
@@ -145,8 +145,6 @@ class Button extends Component<ButtonProps, ButtonState> {
           className="overlay"
           style={{
             backgroundColor: styles[style].color,
-            opacity: isHovered ? '0.12' : isPressed ? '0.20' : '0',
-            transition: 'opacity 500ms cubic-bezier(0, -0.3, 0.5, 1.3)',
           }}
         ></div>
         {isLoading && (
