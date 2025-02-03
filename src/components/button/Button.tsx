@@ -49,7 +49,7 @@ class Button extends Component<ButtonProps, ButtonState> {
   startLoading = () => {
     if (!this.state.isLoading) {
       this.setState({ isLoading: true });
-      setTimeout(() => this.stopLoading(), 2000);
+      setTimeout(() => this.stopLoading(), 6000);
     }
   };
 
@@ -85,13 +85,22 @@ class Button extends Component<ButtonProps, ButtonState> {
     }
 
     const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''}`;
-
+    const shimmerBackground =
+      style === 'primary'
+        ? 'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)'
+        : style === 'secondary'
+          ? 'linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%)'
+          : 'none';
     return (
       <button
         className={buttonClasses}
         style={{
           padding: `${paddingVertical}px ${paddingHorizontal}px`,
-          transform: isPressed ? 'scale(0.95)' : 'scale(1)',
+          transform: isHovered
+            ? 'scale(1.05)'
+            : isPressed
+              ? 'scale(0.95)'
+              : 'scale(1)',
         }}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
@@ -113,7 +122,11 @@ class Button extends Component<ButtonProps, ButtonState> {
           style={{
             gap: `${gap}px`,
             visibility: isLoading ? 'hidden' : 'visible',
-            transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+            transform: isHovered
+              ? 'scale(1.05)'
+              : isPressed
+                ? 'scale(0.95)'
+                : 'scale(1)',
           }}
         >
           <span className="label">{label}</span>
@@ -134,6 +147,12 @@ class Button extends Component<ButtonProps, ButtonState> {
             transition: 'opacity 500ms cubic-bezier(0, -0.3, 0.5, 1.3)',
           }}
         ></div>
+        {isLoading && (
+          <div
+            className="shimmer"
+            style={{ background: shimmerBackground }}
+          ></div>
+        )}
       </button>
     );
   }

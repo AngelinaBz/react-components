@@ -17,7 +17,7 @@
 
 .button.secondary {
   background-color: rgba(131, 102, 86, 0.121);
-  color: white;
+  color: black;
 }
 
 .button.enabled {
@@ -50,4 +50,24 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: calc(100% / 3);
+  animation: shimmer 1000ms infinite linear;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(calc(100% * 3));
+  }
 }
