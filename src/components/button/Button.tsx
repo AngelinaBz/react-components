@@ -1,12 +1,13 @@
 import { Component } from 'react';
 import './Button.css';
 import Counter from '../counter/Counter';
+import { styles } from '../../utils/styles';
 
 type ButtonProps = {
   label: string;
   style: 'primary' | 'secondary';
   size: 28 | 36 | 56;
-  state: 'enabled' | 'pressed' | 'loading' | 'disabled';
+  state?: 'enabled' | 'disabled';
   counter: boolean;
   focused: boolean;
 };
@@ -93,12 +94,8 @@ class Button extends Component<ButtonProps, ButtonState> {
     }
 
     const buttonClasses = `button ${style} ${isHovered ? 'hovered' : ''} ${isPressed ? 'pressed' : ''} ${isLoading ? 'loading' : ''}`;
-    const shimmerBackground =
-      style === 'primary'
-        ? 'linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)'
-        : style === 'secondary'
-          ? 'linear-gradient(to right, rgba(46, 47, 51, 0) 0%, rgba(46, 47, 51, 1) 50%, rgba(46, 47, 51, 0) 100%)'
-          : 'none';
+    const overlayBackground = styles[style].color;
+    const shimmerBackground = styles[style].shimmer;
     return (
       <button
         className={buttonClasses}
@@ -151,6 +148,7 @@ class Button extends Component<ButtonProps, ButtonState> {
         <div
           className="overlay"
           style={{
+            backgroundColor: overlayBackground,
             opacity: isHovered ? '0.12' : isPressed ? '0.20' : '0',
             transition: 'opacity 500ms cubic-bezier(0, -0.3, 0.5, 1.3)',
           }}
