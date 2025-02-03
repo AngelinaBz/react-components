@@ -6,11 +6,12 @@ type CounterProps = {
   size: 8 | 12 | 16 | 20 | 24;
   stroke: boolean;
   quantity: number | string;
+  pulse: boolean;
 };
 
 class Counter extends Component<CounterProps> {
   render() {
-    const { style, size, quantity } = this.props;
+    const { style, size, quantity, pulse } = this.props;
     let minHeight, paddingHorizontal, strokeWidth;
 
     switch (size) {
@@ -53,6 +54,13 @@ class Counter extends Component<CounterProps> {
         }}
       >
         {size < 16 ? null : quantity}
+        {pulse && (size === 8 || size === 12) && (
+          <div className="live-indicator">
+            <div className="dot"></div>
+            <div className="pulse one"></div>
+            <div className="pulse two"></div>
+          </div>
+        )}
       </div>
     );
   }

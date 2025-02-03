@@ -138,11 +138,12 @@ class Button extends Component<ButtonProps, ButtonState> {
           }}
         >
           <span className="label">{label}</span>
-          {counter && (
+          {counter && counterValue > 0 && (
             <Counter
               style={style}
-              size={20}
+              size={16}
               quantity={counterValue > 99 ? '99+' : counterValue}
+              pulse={true}
               stroke={true}
             />
           )}
